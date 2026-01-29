@@ -23,6 +23,14 @@ const student1 = new Student(1, "Vishal", 85);
 console.log("Student Name: ", student1.name);
 console.log("Student Grade: ", student1.getGrade());
 
+class ravi extends Student{
+    padhle(){
+        console.log("Ha bhai padh rha hu.")
+    }
+}
+const ravistudent = new ravi(1,"Raviii",88);
+console.log("Ravi Info: "+ravistudent.getGrade());
+console.log("Ravi Info: "+ravistudent.padhle());
 
 // interface only tells ki kya hona chahie but it does not provide implementation info
 interface Car {
