@@ -50,4 +50,9 @@ const myCar: Car = {
         return `${this.year} ${this.make} ${this.model}`;
     }
 };
+// class buggoi implements Car{
+//     padhle(){
+//         console.log("Ha bhai padh rha hu.")
+//     }
+// }
 console.log("Car Info: ", myCar.getCarInfo());
