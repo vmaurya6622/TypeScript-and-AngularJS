@@ -23,14 +23,14 @@ const student1 = new Student(1, "Vishal", 85);
 console.log("Student Name: ", student1.name);
 console.log("Student Grade: ", student1.getGrade());
 
-class ravi extends Student{
-    padhle(){
+class ravi extends Student {
+    padhle() {
         console.log("Ha bhai padh rha hu.")
     }
 }
-const ravistudent = new ravi(1,"Raviii",88);
-console.log("Ravi Info: "+ravistudent.getGrade());
-console.log("Ravi Info: "+ravistudent.padhle());
+const ravistudent = new ravi(1, "Raviii", 88);
+console.log("Ravi Info: " + ravistudent.getGrade());
+console.log("Ravi Info: " + ravistudent.padhle());
 
 // interface only tells ki kya hona chahie but it does not provide implementation info
 interface Car {
@@ -42,6 +42,12 @@ interface Car {
     //     return `${this.year} ${this.make} ${this.model}`;
     // };
 }
+class buggoi implements Car {
+    constructor(public make: string, public model: string, public year: number) { }
+    getCarInfo(): string {
+        return `${this.year} ${this.make} ${this.model}`;
+    }
+}
 const myCar: Car = {
     make: "Toyota",
     model: "Camry",
@@ -50,9 +56,6 @@ const myCar: Car = {
         return `${this.year} ${this.make} ${this.model}`;
     }
 };
-// class buggoi implements Car{
-//     padhle(){
-//         console.log("Ha bhai padh rha hu.")
-//     }
-// }
 console.log("Car Info: ", myCar.getCarInfo());
+const myBuggoi = new buggoi("Honda", "Civic", 2021);
+console.log("Buggoi Info: ", myBuggoi.getCarInfo());

@@ -18,7 +18,7 @@ console.log("Box 1 Value: ", b1.getValue());
 console.log("Box 2 Value: ", b2.getValue());
 
 // Generic constraints
-function printLength<T extends { length: number }>(item: T) {
+function printLength<T extends { length: number }>(item: T) { // matlab T kuch bhi ho skata hai bas usme length property honi chahie
     console.log(item.length);
 }
 
