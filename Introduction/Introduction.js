@@ -1,3 +1,4 @@
+"use strict";
 /*
     the varibales in typescript are:
     \   - var - function scoped
@@ -15,19 +16,19 @@
     ->  it allows us to define variable types and helps catch errors before running the code;
     ->  widely used for web development or client and server side applications;
 */
-var nameis = "Vishal"; // string
-var age = 22; // number
-var isActive = true; // boolean
-var x; // undefined
-var y = null; // null
+let nameis = "Vishal"; // string
+let age = 22; // number
+let isActive = true; // boolean
+let x; // undefined
+let y = null; // null
 console.log("age == 22?: " + (age == Number("23")));
 console.log("age === 22?: " + (age === 22));
 // for loop
-for (var i = 0; i < 5; i++) {
+for (let i = 0; i < 5; i++) {
     console.log("Value of i: " + i);
 }
 //while loop
-var j = 0;
+let j = 0;
 while (j < 5) {
     console.log("Value of j: " + j);
     j++;
@@ -37,40 +38,38 @@ function add(a, b) {
     return a + b;
 }
 //arrow function: 
-var multiply = function (a, b) {
+const multiply = (a, b) => {
     return a * b;
 };
 console.log("Addition by function: " + add(5, 10));
 console.log("Multiplication by arrow function: " + multiply(5, 10));
 // Arrays:
-var nums = [1, 2, 3, 4, 5]; // array of numbers
+let nums = [1, 2, 3, 4, 5]; // array of numbers
 console.log("Numbers array: " + nums);
 nums.push(6);
 console.log("Numbers array: " + nums);
-var Employee = /** @class */ (function () {
-    function Employee() {
+class Employee {
+    constructor() {
         this.salary = 500;
     }
-    Employee.prototype.printSalary = function () {
-        console.log("Salary is: ".concat(this.salary));
-    };
-    return Employee;
-}());
-var emp = new Employee();
+    printSalary() {
+        console.log(`Salary is: ${this.salary}`);
+    }
+}
+const emp = new Employee();
 emp.printSalary();
-var globalvar = 100; // global variable
-var Sample = /** @class */ (function () {
-    function Sample() {
+let globalvar = 100; // global variable
+class Sample {
+    constructor() {
         this.varibale = 200; // private variable
     }
-    Sample.prototype.assignValue = function () {
-        var localvar = 300; // local variable
+    assignValue() {
+        let localvar = 300; // local variable
         console.log("Local Variable: " + localvar);
-    };
-    return Sample;
-}());
+    }
+}
 console.log("Global Variable: " + globalvar);
-var obj = new Sample();
+let obj = new Sample();
 obj.assignValue();
 // Enumerators
 /*
@@ -101,5 +100,5 @@ var Role;
     Role["USER"] = "USER";
     Role["GUEST"] = "GUEST";
 })(Role || (Role = {}));
-var role = Role.ADMIN;
+let role = Role.ADMIN;
 console.log("Role is: " + role);

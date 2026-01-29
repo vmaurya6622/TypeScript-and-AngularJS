@@ -71,8 +71,6 @@ let user: ReadonlyUser = {
 };
 // user.age = 23; // Error: Cannot assign to 'age' because it is a read-only property.
 
-
-
 //this is for optional
 type Userr = {
     name: string;
@@ -93,10 +91,11 @@ let permissions: RolePermissions = {
     user: false,
     guest: 0
 };
+console.log("\nPermissions: ", permissions.admin);
 console.log("\nPermissions: ", permissions);
 
 /*
-    this is for pick - select some properties
+    this is for pick - select some properties need not to define all of them
 */
 type Product = {
     id: number;
@@ -110,7 +109,8 @@ let productPreview: ProductPreview = {
     id: 1,
     name: "Laptop",
     price: 1000,
-    // description: "A high performance laptop" // Error: Object literal may only specify known properties, and 'description' does not exist in type 'ProductPreview'.
+    // Description: "A high performance laptop" // Error: Object literal may only specify known
+    // properties, and 'description' does not exist in type 'ProductPreview'.
 };
 console.log("\nProduct Preview: ", productPreview);
 
