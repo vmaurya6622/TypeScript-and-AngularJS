@@ -12,7 +12,7 @@
         sort()	reorder
         reverse()	reverse
 
-    Common NON-MUTATING methods
+    Common NON-MUTATING methods -> array will not change, new array created
         Method	Returns
         map()	new array
         filter()	new array
@@ -97,6 +97,8 @@ let sortednums= newarray.sort((a,b)=> a-b); // ascending order
 let descsortednums= newarray.sort((a,b)=> b-a); // descending order
 //to search index of an element we use indexOf
 let index= newarray.indexOf(7); // returns -1 if not found
+
+let reversednums= newarray.reverse(); // reverses the array
 // to check if element exists in array we use includes
 // let includesnum= newarray.includes(3); // returns true/false
 
@@ -110,13 +112,32 @@ for(let i=0;i<newarray.length;i++){
 let partarray= newarray.slice(1,4); // returns elements from index 1 to 3 (4-1)
 console.log("\nPart of Array: ", partarray);
 
+//Adding elements using splice
+
 //we can also use splice to add/remove elements from an array
 let splicedarray= newarray.splice(2,3); // removes 3 elements from index 2
+
+let addingOnlyOneElement = newarray.splice(2, 0, 3); // this is used to add only one element at index 2
+// to insert at beginning use index 0,0,11 // this wii add 11 at the beginning like unshift()
+// to insert at end use array.length,0,11 // this will add 11 at the end like push()
+console.log("\nArray after splicing(removing 3 elements from index 2): ", newarray);
 let splicedarrayadd= newarray.splice(2,0,20,25); // adds 20,25 at index 2
 
+//Removing elements using splice
+let removedarray= newarray.splice(3,2); // removes 2 elements from index 3
+let removedarraystart= newarray.splice(0,2); // removes 2 elements from start
+let removedarrayend= newarray.splice(-2,2); // removes 2 elements from end
 
+let items = ["A", "B", "C", "D"];
+let indexi = items.indexOf("C");
+if (indexi !== -1) {
+    items.splice(indexi, 1);
+}
+console.log("\n"+items);
+// ["A", "B", "D"]
 
 /*
-    -> Do NOT use delete keyword to remove element of array because element remove nhi hota and undefined 
-       ho jata hai jis se array ka size same rehta hai but element undefined ho jata hai.
+    ->  Do NOT use delete keyword to remove element of array because element remove nhi hota and undefined 
+        ho jata hai jis se array ka size same rehta hai but element undefined ho jata hai.
 */
+
