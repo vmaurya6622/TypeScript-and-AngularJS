@@ -33,9 +33,16 @@
 
 <button (click)="toggleUser()">Toggle user</button>
 <p>Email: {{ user?.profile?.email ?? 'Initially None' }}</p>
+	<!-- it reads email only if user and profile is defined otherwise whole expression is undefined -->
 <p></p>
+<!--Fallback: || '(none)' shows a placeholder when the expression is falsy;
+	prefer ?? when you want to treat 0 or empty strings as valid.
+	
+	Toggle: Clicking "Toggle user" alternates user between undefined and an object to demonstrate safe access.
+	Nullish coalescing (??): Use a ?? b over a || b when you want to keep valid falsy values like 0 or ''.
+-->
 
-<p>Name: {{ user?.name ?? '(no name)' }}</p>
+<p>Name: {{ user?.name ?? '(no name)' }}</p> 
 <p>Mobile: {{ user?.mobile ?? '(no mobile)' }}</p>
 <p>Email: {{ user?.profile?.email ?? '(no email)' }}</p>
 <p>Age: {{ user?.profile?.age ?? '(no age)' }}</p>
