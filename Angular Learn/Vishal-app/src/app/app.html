@@ -116,13 +116,13 @@
 	[ngTemplateOutlet]="
 		alertType === 'info' ? infoTpl : alertType === 'warning' ? warnTpl : successTpl
 	"
-	[ngTemplateOutletContext]="{ $implicit: alertMsg }"
->
+	[ngTemplateOutletContext]="{ $implicit: alertMsg }" 
+><!-- ngTemplateOutletContext: passes the value into the template.  -->
 </ng-container>
 
 <!-- Templates -->
 <ng-template #infoTpl let-text>
-	<p style="color: rgb(10, 194, 83)">ℹ️ Info: {{ text }}</p>
+	<p style="color: rgb(10, 28, 194)">ℹ️ Info: {{ text }}</p>
 </ng-template>
 
 <ng-template #warnTpl let-text>
@@ -136,3 +136,40 @@
 <!-- ====================== End ngTemplateOutlet ====================== -->
 
 <!-- now heading towards angular template statements and $event -->
+<h3>Angular Template Statements and $event:</h3>
+<button (click)="counterForTemplateStatements = counterForTemplateStatements + 1">Template statements clicker</button>
+<p>Counter value: {{ counterForTemplateStatements }}</p>
+
+<!-- Now i am doing $event-->
+<button (click)="increment()">Event clicker</button>
+<p></p>
+<p>This is Printing counterForEvent: {{ counterForEvent }}</p>	
+<input
+	placeholder="Type"
+	[value]="textForEvent"
+	(input)="updateText($any($event.target).value)"
+/>
+<p>This is Printing textForEvent: {{textForEvent}}</p>
+
+<!-- now we are going to learn as alias with ngIf -->
+
+<button (click)="toggleUserDetails()">Toggle User Details</button>
+<p *ngIf="userDetails as u;else empty">
+	Hello to the user {{ u.name }}, age {{ u.age }}
+</p>
+<ng-template #empty>
+	<p>No user details available.</p>
+</ng-template>
+
+<!-- now next topic is pipes(|) -->
+<h3>Pipes in Angular</h3>
+<p>Original String: {{ sampleString }}</p>
+
+<!-- these are some of the predefined pipes -->
+<p>Lowercase: {{ sampleString | uppercase }}</p>
+<p>Amount in USD: {{ amountInINR | currency:'USD' }}</p>
+<p>Today: {{ currentDate | date:'yyyy-MM-dd' }}</p>
+<p>Chained: {{ ratio | percent:'1.0-2' | uppercase }}</p>
+
+<!-- Now we are going to learn attribute binding	-->
+<h3>Attribute Binding in Angular</h3>

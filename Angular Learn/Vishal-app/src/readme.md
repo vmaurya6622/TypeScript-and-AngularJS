@@ -6,6 +6,8 @@ Null safe Navigation:
 
 ![alt text](image.png)
 
+========================================================================================
+
 Falsy:
     JavaScript me if (...) ke andar agar values ko false man li jati hai chahe vo actual me fasle ho ya na ho.
 
@@ -19,7 +21,6 @@ Falsy:
         NaN
     
     -> jab empty string/ 0/ false ko invalid manna ho then we use ||. 
-
 
 ========================================================================================
 
@@ -58,6 +59,24 @@ Falsy:
 ========================================================================================
 
 ngTemplateOutlet is an HTML buleprint: ye browser me tabhi render hota hai jab koi ise call karta hai
+    <ng-template>: it defines a reusable template block(not rendered until referenced).
+    [ngTemplateOutlet]: it chooses which template to render
+    [ngTemplateOutletContext]: it passes values to the template. the $implicit key is read by a matching 
+                                let variable.
+    let-text: it declatres a local variable inside the template that reads the $implicit value form context.
+    <ng-container>: it is a local wrapper that does not create extra DOM elements.
+
+    alertType === 'info' ? infoTpl : alertType === 'warning' ? warnTpl : successTpl
+    
+    This is same as:
+
+    if (alertType === 'info') {
+        return infoTpl;
+    } else if (alertType === 'warning') {
+        return warnTpl;
+    } else {
+        return successTpl;
+    }
 
 ========================================================================================
 
@@ -73,4 +92,50 @@ Example:
     so, on click of this particular button the count variable will be incremented by 1 and
     it runs everytime the button is clicked.
 
+$event:
+    so this is a native DOM event object that angular passes to you.
+    Example:
+        <input (input)="onInput($event)" />
+        $event = InputEvent
+        $event.target = HTMLInputElement
+
 ========================================================================================
+
+Now we gonna learn $implicit;
+so it is a default value which you send to template without giving its name.
+
+<ng-container
+  [ngTemplateOutlet]="infoTpl"
+  [ngTemplateOutletContext]="{ msg: message }"> // context object me key: msg
+</ng-container>
+
+<ng-template #infoTpl let-text="msg"> // this is template
+  <p>{{ text }}</p>
+</ng-template>
+
+=========== now this is implicit case ===========
+<ng-container
+  [ngTemplateOutlet]="infoTpl"
+  [ngTemplateOutletContext]="{ $implicit: message }"> //context object me key is $implicit
+</ng-container>
+
+<ng-template #infoTpl let-text>  // this is template
+  <p>{{ text }}</p>
+</ng-template>
+
+========================================================================================
+
+as alias with ngIf ka matlab hota hai isko ek short naam de do 
+like: Angular me *ngIf="user as u"
+iska meaning hai:
+    agar user truthy hai toh us user ko ek local variable u me store karlo.
+
+========================================================================================
+
+pipes in templates transform values to display using the | operator
+multiple pipes can be chained and pure pipes are used for better performance.
+
+========================================================================================
+========================================================================================
+
+

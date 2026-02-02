@@ -12,9 +12,11 @@ export class App { // this will only work when we export this class
 	name = 'Angular 20';
 	ok = true; // i made this to check for ngIf directive
 	items = ['apple', 'banana', 'mango', 'orange', 'grapes']; // i made this to check for ngFor directive
-	trackByFn(index:number,item:string){
-		return item;''
+	trackByFn(index: number, item: string) {
+		return item; ''
 	}
+
+	counterForTemplateStatements = 55;
 
 	alertType: 'info' | 'warning' | 'success' = 'info';
 	alertMsg = 'This is a template message'; // i made this to check for ngTemplate directive
@@ -67,4 +69,26 @@ export class App { // this will only work when we export this class
 		}
 		this.loopOutput = result;
 	}
+
+	// Now writing for $event 
+	counterForEvent = 0;
+	increment() {
+		this.counterForEvent++;
+	}
+	textForEvent = '';
+	updateText(value: string) {
+		this.textForEvent = value;
+	}
+
+	//for as alias with ngIf
+	userDetails:{name:string,age:number} | null = {name:'Vishal', age: 25};
+	toggleUserDetails(){
+		this.userDetails = this.userDetails ? null : {name:'Vishal',age:25};
+	}	
+
+	//for pipes(|)
+	sampleString = 'hello angular pipes!';
+	amountInINR = 123.789;
+	currentDate = new Date()
+	ratio = 0.77;
 }
