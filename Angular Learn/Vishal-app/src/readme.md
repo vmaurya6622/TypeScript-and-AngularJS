@@ -38,8 +38,39 @@ Falsy:
 
     -> ngIf:  condition ke basis par kisi HTML element ko dikhaya ya chupaya jata hai.
               if condition is true then element DOM me ata hai otherwise remove hojata h.
-    -> noFor: loops lagane ke lie use hota hai, so array me har item ke lie HTML repeat     
+    -> ngFor: loops lagane ke lie use hota hai, so array me har item ke lie HTML repeat     
               karta hai.
+
+    ngFor example:
+        <ul>
+            <li *ngFor="List of names is printing below: ">
+                {{name}}
+            </li>
+        </ul>
+
+        and names = ["vishal","rahul","naman"];
+
+        then outptut will be:
+        vishal
+        rahul
+        naman
 
 ========================================================================================
 
+ngTemplateOutlet is an HTML buleprint: ye browser me tabhi render hota hai jab koi ise call karta hai
+
+========================================================================================
+
+Template statements are the small pieces of code that runs when an event happens in the UI.
+They are written inside the event bindings like:
+    (click)="..."
+    (input)="..."
+    (change)="..."
+they execute in the component's context and not global JS
+
+Example:
+    <button (click)="count = count + 1">Add</button>
+    so, on click of this particular button the count variable will be incremented by 1 and
+    it runs everytime the button is clicked.
+
+========================================================================================

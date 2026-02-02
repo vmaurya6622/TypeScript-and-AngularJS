@@ -10,32 +10,129 @@
 	(mouseleave)="reversename()"
 >
 	Click to visit Ciena!
-
 </a>
 
-<h3>Template Reference Variables </h3>
-    <div class="toolbar">
-
-		<input
+<h3>Template Reference Variables</h3>
+<div class="toolbar">
+	<input
 		#box
 		type="number"
 		placeholder="Enter a number to see magic: "
 		(input)="current = box.value"
-	/> 
+	/>
 
-	<button (click)="read(box.value)">Submit value</button> <!-- to read the value of input box when button is clicked -->
-	<button (click)="box.focus()">Focus input</button>  <!-- to focus on input box when button is clicked -->
-	<pre class="output" *ngIf="loopOutput">{{loopOutput}}</pre>
-	<span style="margin-left:8px;color:#666">
-		length={{ box.value.length || 0 }}
-	</span>
+	<button (click)="read(box.value)">Submit value</button>
+	<!-- to read the value of input box when button is clicked -->
+	<button (click)="box.focus()">Focus input</button>
+	<!-- to focus on input box when button is clicked -->
+	<pre class="output" *ngIf="loopOutput">{{ loopOutput }}</pre>
+	<span style="margin-left: 8px; color: #666"> length={{ box.value.length || 0 }} </span>
 </div>
-<p>Current: {{ current || '(empty)' }}</p>  <!-- if the variable inside it is empty then show (empty) -->
+<p>Current: {{ current || '(empty)' }}</p>
+<!-- if the variable inside it is empty then show (empty) -->
 
 <button (click)="toggleUser()">Toggle user</button>
-<p> Email: {{user?.profile?.email??'Initially None'}}<p>
+<p>Email: {{ user?.profile?.email ?? 'Initially None' }}</p>
+<p></p>
 
 <p>Name: {{ user?.name ?? '(no name)' }}</p>
 <p>Mobile: {{ user?.mobile ?? '(no mobile)' }}</p>
 <p>Email: {{ user?.profile?.email ?? '(no email)' }}</p>
 <p>Age: {{ user?.profile?.age ?? '(no age)' }}</p>
+
+<!-- ======================   Directives	=========================== -->
+
+<div></div>
+<button (click)="ok = !ok">Toggle</button>
+<!-- inhere har click par ok ki value true false hoti rhegi
+	ok === true  "ok" wala <div> DOM me aata hai
+	ok === false "not ok" wala template dikhta hai -->
+<div></div>
+<div *ngIf="ok; else other">ok</div>
+<ng-template #other> not ok </ng-template>
+
+<!-- Now understanding ngFor -->
+
+<h3>All Items</h3>
+<ol>
+	<li *ngFor="let item of items; trackBy: trackByFn">
+		{{ item }}
+	</li>
+</ol>
+
+<h3>First Item</h3>
+<ol>
+	<ng-container *ngFor="let item of items; let f = first">
+		<li *ngIf="f">{{ item }}</li>
+	</ng-container>
+</ol>
+
+<h3>Last Item</h3>
+<ol>
+	<ng-container *ngFor="let item of items; let l = last">
+		<li *ngIf="l">{{ item }}</li>
+	</ng-container>
+</ol>
+
+<h3>Even Items</h3>
+<ol>
+	<ng-container *ngFor="let item of items; let e = even">
+		<li *ngIf="e">{{ item }}</li>
+	</ng-container>
+</ol>
+
+<h3>Odd Items</h3>
+<ol>
+	<ng-container *ngFor="let item of items; let o = odd">
+		<li *ngIf="o">{{ item }}</li>
+	</ng-container>
+</ol>
+
+<!-- ======================   End of Directives	=========================== -->
+
+<!-- Now Heading to ngTemplate -->
+
+<h3>ngTemplateOutlet Demo</h3>
+<label>
+	Selection:
+  <select (change)="alertType = $any($event.target).value">
+		<option value="info">information idhar hai</option>
+		<option value="warning">warning mil gai</option>
+		<option value="success">success ho gaya</option>
+	</select>
+</label>
+
+<br /><br />
+
+<label>
+	Message:
+	<input [value]="alertMsg" (input)="alertMsg = $any($event.target).value" />
+</label>
+
+<br /><br />
+
+<!-- Template renderer -->
+<ng-container
+	[ngTemplateOutlet]="
+		alertType === 'info' ? infoTpl : alertType === 'warning' ? warnTpl : successTpl
+	"
+	[ngTemplateOutletContext]="{ $implicit: alertMsg }"
+>
+</ng-container>
+
+<!-- Templates -->
+<ng-template #infoTpl let-text>
+	<p style="color: rgb(10, 194, 83)">ℹ️ Info: {{ text }}</p>
+</ng-template>
+
+<ng-template #warnTpl let-text>
+	<p style="color: darkorange">⚠️ Warning: {{ text }}</p>
+</ng-template>
+
+<ng-template #successTpl let-text>
+	<p style="color: rgb(46, 139, 87)">✅ Success: {{ text }}</p>
+</ng-template>
+
+<!-- ====================== End ngTemplateOutlet ====================== -->
+
+<!-- now heading towards angular template statements and $event -->
