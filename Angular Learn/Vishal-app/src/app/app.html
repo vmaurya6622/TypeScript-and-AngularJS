@@ -31,3 +31,11 @@
 	</span>
 </div>
 <p>Current: {{ current || '(empty)' }}</p>  <!-- if the variable inside it is empty then show (empty) -->
+
+<button (click)="toggleUser()">Toggle user</button>
+<p> Email: {{user?.profile?.email??'Initially None'}}<p>
+
+<p>Name: {{ user?.name ?? '(no name)' }}</p>
+<p>Mobile: {{ user?.mobile ?? '(no mobile)' }}</p>
+<p>Email: {{ user?.profile?.email ?? '(no email)' }}</p>
+<p>Age: {{ user?.profile?.age ?? '(no age)' }}</p>

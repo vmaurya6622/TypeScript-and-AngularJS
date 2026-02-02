@@ -11,6 +11,22 @@ import { Component } from '@angular/core';
 export class App { // this will only work when we export this class
 	name = 'Angular 20';
 
+	user?:{
+		name?:string
+		mobile?:string
+
+		profile?:{
+			email?:string;
+			age?:number;
+		};
+	};
+	toggleUser(){
+		this.user=this.user?undefined :
+			{name:undefined,
+				mobile:'1234567890',
+				profile:{email:'vimaurya@ciena.com', age:21}
+			};
+	}
 	changename() {
 		this.name = 'hp got a new name.';
 	}
