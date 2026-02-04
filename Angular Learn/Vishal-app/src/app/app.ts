@@ -1,13 +1,18 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { HelloComponent } from './hello.component';
+// import { CounterButtonComponent } from './hello.component';
 
+type Item = { id: number, name: string }
 @Component({
 	selector: 'app-root',
 	standalone: true,
-	imports: [CommonModule],
+	imports: [CommonModule, HelloComponent],
 	templateUrl: './app.html',
 	styleUrls: ['./app.css']
 })
+
+
 export class App { // this will only work when we export this class
 	name = 'Angular 20';
 	ok = true; // i made this to check for ngIf directive
@@ -63,8 +68,8 @@ export class App { // this will only work when we export this class
 			this.loopOutput = 'Please enter a valid positive number';
 			return;
 		}
-		let result = '';
-		for (let i = 1; i < n; i++) {
+		let result = 'For Loop Output:\n';
+		for (let i = 0; i < n; i++) {
 			result += `value is: ${i}\n`;
 		}
 		this.loopOutput = result;
@@ -81,14 +86,72 @@ export class App { // this will only work when we export this class
 	}
 
 	//for as alias with ngIf
-	userDetails:{name:string,age:number} | null = {name:'Vishal', age: 25};
-	toggleUserDetails(){
-		this.userDetails = this.userDetails ? null : {name:'Vishal',age:25};
-	}	
+	userDetails: { name: string, age: number } | null = { name: 'Vishal', age: 25 };
+	toggleUserDetails() {
+		this.userDetails = this.userDetails ? null : { name: 'Vishal', age: 25 };
+	}
 
 	//for pipes(|)
 	sampleString = 'hello angular pipes!';
 	amountInINR = 123.789;
 	currentDate = new Date()
-	ratio = 0.77;
+	ratio = 0.74855;
+
+	// Attribute binding
+	wide = true;
+	get label() {
+		return this.wide ? 'Table is wide' : 'Table is narrow';
+	}
+	toggle() {
+		this.wide = !this.wide;
+	}
+
+	// TrackBy function 
+	itemms: Item[] = [
+		{ id: 1, name: "Alpha" },
+		{ id: 2, name: "Beta" },
+		{ id: 3, name: "Gamma" },
+		{ id: 4, name: "Delta" },
+		{ id: 5, name: "Epsilon" },
+	]
+	shuffle() {
+		this.itemms = [...this.itemms].reverse();
+	}
+	trackById(index: number, itemms: Item) {
+		return itemms.id;
+	}
+
+	// @Input componenet
+	userName = 'Vishal';  // data is passed to child component via this property
+
+	//@Output component
+	lastCount = 0;
+	onChildClicked(n: number) {
+		this.lastCount = n;
+	}
+
+	// Angular events
+	count = '';
+	lastKey = '';
+	onInput(e: Event) {
+		this.count = (e.target as HTMLInputElement).value;
+	}
+	ctr = 21;
+	addvalues() {
+		this.ctr += 10;
+	}
+
+	//Debounced Input Example
+	immediate = ''
+	debounced = ''
+	private debounceTimer: any;
+	onDebouncedInput(e: Event) {
+		const v = (e.target as HTMLInputElement)?.value ?? '';
+		this.immediate = v;
+		clearTimeout(this.debounceTimer);
+		this.debounceTimer = setTimeout(() => this.debounced = v, 400);
+	}
+
+	//Angular Conditionals
+	
 }

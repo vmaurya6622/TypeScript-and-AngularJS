@@ -6,6 +6,19 @@ a {
   font-size: 20px;
 }
 
+.container {
+  display: flex;
+  height: 100vh; /* full screen height */
+}
+
+.left {
+  flex: 1;
+  /* background: rgb(175, 230, 248); */
+}
+.right {
+  flex: 1;
+  /* background: rgb(177, 237, 177); */
+}
 .output {
   white-space: pre-line; /* \n ko new line banane ke liye */
 }

@@ -136,6 +136,107 @@ pipes in templates transform values to display using the | operator
 multiple pipes can be chained and pure pipes are used for better performance.
 
 ========================================================================================
+
+Attribute binding in angular is used to set HTML attributes directly
+    -> we have to use attribute binding when no corresponding DOM property exists.
+    -> we use property binding for normal element properties and common with ARIA atttributes and 
+        table attr like colspan.
+    -> [attr.attributeName]="expression" so angular evaluates this expression and assignes its values
+        to the HTML attribute.
+    -> [attr.aria-label]: it sets HTML aria-label attribute using the component value.
+    -> attr.: prefer attr. when no one is matching DOM property e.g. ARIA, colspan.
+    -> for normal elements we have to use property binding and attr.
+    -> get label(): Components a descriptive string from the current wide value.
+
 ========================================================================================
+
+TrackBy:
+    -> Angular jab *ngFor chalata hai, wo list ko compare karta hai.
+    -> without trackBy DOM will recreate new objects. so using trackBy will prevent it from 
+        recreating new objects.
+    -> trackBy is a function that returns a unique identity for every function.
+        e.g. id, uuid and database primary keys.
+    -> *ngFor ... trackBy: trackById: Uses trackById to give each item a stable identity so
+        Angular can reuse DOM nodes when the list order changes.
+    -> trackById(index, item): Returns the unique key for an item. Here, it returns item.id regardless of index.
+
+========================================================================================
+
+parent to child communication is done by @Input and child to parent communication is done by @Output
+
+========================================================================================
+
+Content Projection:
+    -> it renders parent provided content inside a child component.
+    -> it marks insertion points using <ng-content>
+    -> also it uses select to target specific slots.
+    -> Eg. let's say dabba jiska design fixed hai vo child component, andar ka saman is parent ka HTML 
+       and ng-content is dabbe ke andar ki jgah.
+
+========================================================================================
+
+LifeCycle Hooks 
+    -> 
+
+========================================================================================
+
+Angular data Binding: 
+    -> {{value}} -> this is interpolation so it is used to display the objects it is only for
+        read only bindings.
+    -> [prop]="value" HTML element ki property ko TS value deta hai.
+    -> (event)=handler($event) -> ye HTML event ko TS method se connect karta hai. so it handles user actions.
+    -> [(ngModel)]="value" -> TS ↔ HTML dono side data sync hota hia.
+        -> Agar input box me user kuch type kare → value TypeScript variable me update ho jaati hai
+        -> Agar TypeScript me variable change ho → UI automatically update ho jaata hai
+
+========================================================================================
+
+Angular Directives:
+    -> It adds behaviour to elements with @Directive and a selector.
+    -> it tells angular ki kisi existing element ya component ke sath kya extra behaviour add
+        karna hai.
+    -> Three types:
+            -> Component Directives  -- Internally component is also a directive
+            -> Structural Directives
+            -> Attribute Directives
+    -> Structural Directives includes *ngIf, *ngFor, and *ngSwitch
+        e.g. <p *ngIf="isLoggedIn">Welcome</p>   so if isLoggenIn is true then ye welcome render 
+            hoga otherwise ye gayab rahega. 
+    -> Attribute directive main work is ki element ka naya look ya behaviour change karna bina 
+        DOM remove kie.
+
+========================================================================================
+
+Angular Events:
+    -> click events, type events, hover events, key press and mouse move these are some of the mouse events.
+    -> there are keyup events that got triggered when we leave the keys.
+        <input (keyup)="lastKey =$any($event).key>
+        $event.key batata hai ki kaun si key press ki hai
+            <input (keyup.enter)="submit()">  // enter dabaya then we submit
+            <input (keyup.escape)="cancel()">  // esc dabaya then we cancel
+Event Filtering:
+    -> to run specific events/ functions when we press assigned keys like enter/ esc/ shift.
+    -> we use debounced input to prevent repetitive calling of function, we call the functions only after the set 
+        debouncing timer.
+
+========================================================================================
+
+Angular Conditionals:
+    -> we use @if , @else if and @else for conditional logic whereas we use @switch to select 
+       one view among many.
+    -> Signals: drive the conditions from signals and read them with sig() in templates.
+    -> @if removes objects from the DOM whereas [hidden] or css hides without destroying the object.
+     
+
+========================================================================================
+
+
+
+========================================================================================
+
+
+
+========================================================================================
+
 
 
