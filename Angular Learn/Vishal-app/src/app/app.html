@@ -263,6 +263,42 @@
 
 		<!-- Angular conditionals -->
 		<h3>Angular Conditionals</h3>
+		<button (click)="toggleConditional()">Toggle Condition</button>
+		@if(conditionalBool){
+			<p>The condition is TRUE!</p>
+		}@else{
+			<p>The condition is changed to FALSE!</p>
+		}
+		<!-- Now going towards switch case -->
+		<h3>Angular Switch Case</h3>
+		@switch(switchValue){
+			@case('info'){
+				<p style="color: blue">This is an informational message.</p>
+			}
+			@case('warning'){
+				<p style="color: orange">This is a warning message.</p>
+			}
+			@case('error'){
+				<p style="color: red">This is an error message.</p>
+			}
+			@default{
+				<p style="color: green">This is a default message.</p>
+			}
+		}
+
+		<!-- now we are going to do angular lists -->
+		<h3>Angular Lists</h3>
+		<button (click)="addItem()">Add Item</button>
+		<button (click)="removeItem()">Pop Item</button>
+		<button (click)="clearList()">Clear List</button>
+		<ol> 
+			@for (item of AngularList;let i =$index;track item){
+				<li>{{item}}</li>
+			}@empty{
+				<li> No items available in the list to display. </li>
+			}
+		</ol>
+
 		
 	</div>
 </div>

@@ -6,6 +6,8 @@ Null safe Navigation:
 
 ![alt text](image.png)
 
+
+Very Important Image ![alt text](image-1.png)
 ========================================================================================
 
 Falsy:
@@ -226,11 +228,14 @@ Angular Conditionals:
        one view among many.
     -> Signals: drive the conditions from signals and read them with sig() in templates.
     -> @if removes objects from the DOM whereas [hidden] or css hides without destroying the object.
-     
+    
 
 ========================================================================================
 
-
+Angular Lists:
+    -> While rendering, it repeats the array/list data.
+    -> so, we use @for to make the code more cleaner, faster and perfect with signals.
+    -> 
 
 ========================================================================================
 

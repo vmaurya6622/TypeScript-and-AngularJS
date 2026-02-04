@@ -153,5 +153,27 @@ export class App { // this will only work when we export this class
 	}
 
 	//Angular Conditionals
-	
+	conditionalBool=true;
+	toggleConditional(){
+		this.conditionalBool=!this.conditionalBool;
+	}
+	//Angular Switch Case
+	switchValue='info'; // this we can change between 'info','warning','error' and default message types.
+	changeSwitchValue(val:string){
+		this.switchValue=val;
+	}
+	//signal is a reactive variable in angular that tells angular to re-render the component when its value changes.
+	//normally boolean varible's value is not accessible to angular but signal makes it accessible.
+
+	// Now we are going to learn angular lists
+	AngularList=["Mango","Banana","Orange","Grapes","Pineapple"];
+	addItem(){
+		this.AngularList.push("New Fruit "+(this.AngularList.length+1));
+	}
+	removeItem(){
+		this.AngularList.pop();
+	}
+	clearList(){
+		this.AngularList=[];
+	}
 }
