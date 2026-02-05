@@ -1,13 +1,15 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input } from '@angular/core';
+import { Component, Input, signal } from '@angular/core';
 import { HelloComponent } from './hello.component';
+import { FormsModule } from '@angular/forms';
+// import it from '@angular/common/locales/extra/it';
 // import { CounterButtonComponent } from './hello.component';
 
 type Item = { id: number, name: string }
 @Component({
 	selector: 'app-root',
 	standalone: true,
-	imports: [CommonModule, HelloComponent],
+	imports: [CommonModule, HelloComponent, FormsModule],
 	templateUrl: './app.html',
 	styleUrls: ['./app.css']
 })
@@ -153,27 +155,63 @@ export class App { // this will only work when we export this class
 	}
 
 	//Angular Conditionals
-	conditionalBool=true;
-	toggleConditional(){
-		this.conditionalBool=!this.conditionalBool;
+	conditionalBool = true;
+	toggleConditional() {
+		this.conditionalBool = !this.conditionalBool;
 	}
 	//Angular Switch Case
-	switchValue='info'; // this we can change between 'info','warning','error' and default message types.
-	changeSwitchValue(val:string){
-		this.switchValue=val;
+	switchValue = 'warning'; // this we can change between 'info','warning','error' and default message types.
+	changeSwitchValue(val: string) {
+		this.switchValue = val;
 	}
 	//signal is a reactive variable in angular that tells angular to re-render the component when its value changes.
 	//normally boolean varible's value is not accessible to angular but signal makes it accessible.
 
 	// Now we are going to learn angular lists
-	AngularList=["Mango","Banana","Orange","Grapes","Pineapple"];
-	addItem(){
-		this.AngularList.push("New Fruit "+(this.AngularList.length+1));
+	AngularList = ["Mango", "Banana", "Orange", "Grapes", "Pineapple"];
+	addItem() {
+		this.AngularList.push("New Fruit " + (this.AngularList.length + 1));
 	}
-	removeItem(){
+	removeItem() {
 		this.AngularList.pop();
 	}
-	clearList(){
-		this.AngularList=[];
+	clearList() {
+		this.AngularList = [];
 	}
+
+	//list with track
+	AngularListWithTrack = signal([
+		{ id: 1, name: 'rahul' },
+		{ id: 2, name: 'vansh' },
+		{ id: 3, name: 'sachin' },
+	])
+	renameFirst() {
+		this.AngularListWithTrack.update(a => a.map((it, i) => i === 0 ? { ...it, name: it.name + ' updatedName' } : it));
+	}
+	//Fisher–Yates Shuffle Algorithm
+	nextIdtobeInserted = 4;
+	shuffleList() {
+		this.AngularListWithTrack.update(a => {
+			const copy = [...a];
+			for (let i = copy.length - 1; i > 0; i--) {
+				const j = Math.floor(Math.random() * (i + 1));  // gives values between 0 to i
+				[copy[i], copy[j]] = [copy[j], copy[i]]; // this is swapping syntax
+			} return copy;
+		});
+	}
+	addListItem() {
+		this.AngularListWithTrack.update(a => [...a, { id: this.nextIdtobeInserted++, name: 'New Sonam' }]);
+	}
+	SortByIdAsc() {
+		this.AngularListWithTrack.update(a => [...a].sort((x, y) => x.id - y.id));
+	}
+	SortByIdDsc() {
+		this.AngularListWithTrack.update(a => [...a].sort((x, y) => y.id - x.id));
+	}
+
+	// now Filter and Sort
+
+	Formname = '';
+	submitted = false;
+	onSubmit() { this.submitted = true; }
 }

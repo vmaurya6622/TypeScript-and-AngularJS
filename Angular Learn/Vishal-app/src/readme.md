@@ -237,6 +237,17 @@ Angular Lists:
     -> so, we use @for to make the code more cleaner, faster and perfect with signals.
     -> 
 
+    const copy = arr // isme new array nhi banti hai same reference use hota hai 
+    const copy = [...arr] // isme new array banegi aur arr ke sare elements ko copy kia jayega.
+
+    Math.random always gives random number between 0 and 1 (not inclusive so doesn't gives 1) 
+    Sorting in TypeScript:
+        .sort((x, y) => x.id - y.id) for ascending order and .sort((x, y) => y.id - x.id) for descending order sorting
+            so,  Condition	      Result	        Effect
+                    < 0	      x pehle aayega	   ASC order
+                    > 0       y pehle aayega	
+                    = 0	        order same	
+
 ========================================================================================
 
 

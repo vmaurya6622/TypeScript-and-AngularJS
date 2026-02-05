@@ -242,25 +242,23 @@
 			<p>Hello World</p>
 			<button>Click Me</button>
 		</hello-comp>
-		</div>
-		<div class="right">
 		<!-- Angular events -->
 		<h3>Angular Events</h3>
 		<input
-			placeholder="Type here"
-			(input)="onInput($event)"
-			(keyup)="addvalues()"    
-			(keydown)="lastKey = $any($event).key">  <!-- .k means activated only when k is pressed, .enter is when enter is pressed. -->
+		placeholder="Type here"
+		(input)="onInput($event)"
+		(keyup)="addvalues()"    
+		(keydown)="lastKey = $any($event).key">  <!-- .k means activated only when k is pressed, .enter is when enter is pressed. -->
 		<p>Value is : {{count}}</p>
 		<p>Last key pressed: {{lastKey}}</p>
 		<p>Counter value: {{ctr}}</p>
-
+		
 		<!-- Debounced Input -->
 		<h3>Debounced Input</h3>
 		<input type="text" placeholder="Type here for debounced input" (input)="onDebouncedInput($event)" />
 		<p> Immediate:{{immediate}}</p>
 		<p>Debounced (400ms): {{debounced}}</p>
-
+		
 		<!-- Angular conditionals -->
 		<h3>Angular Conditionals</h3>
 		<button (click)="toggleConditional()">Toggle Condition</button>
@@ -285,7 +283,10 @@
 				<p style="color: green">This is a default message.</p>
 			}
 		}
-
+	
+		</div>
+		<div class="right">
+		
 		<!-- now we are going to do angular lists -->
 		<h3>Angular Lists</h3>
 		<button (click)="addItem()">Add Item</button>
@@ -299,6 +300,35 @@
 			}
 		</ol>
 
-		
+		<!-- Angular lists with track -->
+		<h3>Angular Lists with Track By</h3>
+		<button (click)="addListItem()">Add Item</button>
+		<button (click)="renameFirst()">Rename First</button>	
+		<button (click)="shuffleList()">Shuffle List</button>
+		<button (click)="SortByIdAsc()">Sort By Id Asc</button>
+		<button (click)="SortByIdDsc()">Sort By Id Dsc</button>
+		<ul>
+			@for (it of AngularListWithTrack(); let i = $index; track it.id){
+				<li> {{ it.name }} (id: {{ it.id }})</li>
+			}
+		</ul>
+
+		<!-- Template Drive forms: -->
+		<h3>Template Driven Forms</h3>
+		<form #f="ngForm" (ngSubmit)="onSubmit()">
+			<label>
+				<input
+				type="text"
+				name="name"
+				[(ngModel)]="Formname"
+				placeholder="Enter your name"
+				required
+				>
+			</label>
+			<br><br>
+			<button type="submit" [disabled]="f.invalid">Submit</button>
+		</form>
+		<p>Value: {{ Formname }}</p>
+		<p *ngIf="submitted">Submitted!</p>
 	</div>
 </div>
