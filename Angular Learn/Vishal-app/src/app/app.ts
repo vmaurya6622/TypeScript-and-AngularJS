@@ -10,7 +10,7 @@ type Item = { id: number, name: string }
 @Component({
 	selector: 'app-root',
 	standalone: true,
-	imports: [CommonModule, HelloComponent, FormsModule, ReactiveFormsModule, RouterOutlet, RouterLink],
+	imports: [CommonModule, FormsModule, ReactiveFormsModule, RouterOutlet],
 	templateUrl: './app.html',
 	styleUrls: ['./app.css']
 })
