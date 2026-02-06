@@ -1,0 +1,433 @@
+<button routerLink="/about">Go to About Page</button>
+
+<div class="container">
+	<div class = "left">
+		<h3>Hello {{ name.toUpperCase() }}</h3>
+
+		<pre class="output">{{ myfunc() }}</pre>
+
+
+
+		<a
+			href="https://www.ciena.com"
+			target="_blank"
+			rel="noopener noreferrer"
+			(mouseenter)="changename()"
+			(mouseleave)="reversename()"
+		>
+			Click to visit Ciena!
+		</a>
+
+		<h3>Template Reference Variables</h3>
+		<div class="toolbar">
+			<input
+				#box
+				type="number"
+				placeholder="Enter a number to see magic: "
+				(input)="current = box.value"
+			/>
+
+			<button (click)="read(box.value)">Submit value</button>
+			<!-- to read the value of input box when button is clicked -->
+			<button (click)="box.focus()">Focus input</button>
+			<!-- to focus on input box when button is clicked -->
+			<pre class="output" *ngIf="loopOutput">{{ loopOutput }}</pre>
+			<span style="margin-left: 8px; color: #666"> length={{ box.value.length || 0 }} </span>
+		</div>
+		<p>Current: {{ current || '(empty)' }}</p>
+		<!-- if the variable inside it is empty then show (empty) -->
+
+		<button (click)="toggleUser()">Toggle user</button>
+		<p>Email: {{ user?.profile?.email ?? 'Initially None' }}</p>
+			<!-- it reads email only if user and profile is defined otherwise whole expression is undefined -->
+		<p></p>
+		<!--Fallback: || '(none)' shows a placeholder when the expression is falsy;
+			prefer ?? when you want to treat 0 or empty strings as valid.
+			
+			Toggle: Clicking "Toggle user" alternates user between undefined and an object to demonstrate safe access.
+			Nullish coalescing (??): Use a ?? b over a || b when you want to keep valid falsy values like 0 or ''.
+		-->
+
+		<p>Name: {{ user?.name ?? '(no name)' }}</p> 
+		<p>Mobile: {{ user?.mobile ?? '(no mobile)' }}</p>
+		<p>Email: {{ user?.profile?.email ?? '(no email)' }}</p>
+		<p>Age: {{ user?.profile?.age ?? '(no age)' }}</p>
+
+		<!-- ======================   Directives	=========================== -->
+
+		<div></div>
+		<button (click)="ok = !ok">Toggle</button>
+		<!-- inhere har click par ok ki value true false hoti rhegi
+			ok === true  "ok" wala <div> DOM me aata hai
+			ok === false "not ok" wala template dikhta hai -->
+		<div></div>
+		<div *ngIf="ok; else other">ok</div>
+		<ng-template #other> not ok </ng-template>
+
+		<!-- Now understanding ngFor -->
+
+		<h3>All Items</h3>
+		<ol>
+			<li *ngFor="let item of items; trackBy: trackByFn">
+				{{ item }}
+			</li>
+		</ol>
+
+		<h3>First Item</h3>
+		<ol>
+			<ng-container *ngFor="let item of items; let f = first">
+				<li *ngIf="f">{{ item }}</li>
+			</ng-container>
+		</ol>
+
+		<h3>Last Item</h3>
+		<ol>
+			<ng-container *ngFor="let item of items; let l = last">
+				<li *ngIf="l">{{ item }}</li>
+			</ng-container>
+		</ol>
+
+		<h3>Even Items</h3>
+		<ol>
+			<ng-container *ngFor="let item of items; let e = even">
+				<li *ngIf="e">{{ item }}</li>
+			</ng-container>
+		</ol>
+
+		<h3>Odd Items</h3>
+		<ol>
+			<ng-container *ngFor="let item of items; let o = odd">
+				<li *ngIf="o">{{ item }}</li>
+			</ng-container>
+		</ol>
+
+		<!-- ======================   End of Directives	=========================== -->
+
+		<!-- Now Heading to ngTemplate -->
+
+		<h3>ngTemplateOutlet Demo</h3>
+		<label>
+			Selection:
+		<select (change)="alertType = $any($event.target).value">
+				<option value="info">information idhar hai</option>
+				<option value="warning">warning mil gai</option>
+				<option value="success">success ho gaya</option>
+			</select>
+		</label>
+
+		<br /><br />
+
+		<label>
+			Message:
+			<input [value]="alertMsg" (input)="alertMsg = $any($event.target).value" />
+		</label>
+
+		<br /><br />
+
+		<!-- Template renderer -->
+		<ng-container
+			[ngTemplateOutlet]="
+				alertType === 'info' ? infoTpl : alertType === 'warning' ? warnTpl : successTpl
+			"
+			[ngTemplateOutletContext]="{ $implicit: alertMsg }" 
+		><!-- ngTemplateOutletContext: passes the value into the template.  -->
+		</ng-container>
+
+		<!-- Templates -->
+		<ng-template #infoTpl let-text>
+			<p style="color: rgb(10, 28, 194)">ℹ️ Info: {{ text }}</p>
+		</ng-template>
+
+		<ng-template #warnTpl let-text>
+			<p style="color: darkorange">⚠️ Warning: {{ text }}</p>
+		</ng-template>
+
+		<ng-template #successTpl let-text>
+			<p style="color: rgb(46, 139, 87)">✅ Success: {{ text }}</p>
+		</ng-template>
+
+		<!-- ====================== End ngTemplateOutlet ====================== -->
+
+		<!-- now heading towards angular template statements and $event -->
+		<h3>Angular Template Statements and $event:</h3>
+		<button (click)="counterForTemplateStatements = counterForTemplateStatements + 1">Template statements clicker</button>
+		<p>Counter value: {{ counterForTemplateStatements }}</p>
+
+		<!-- Now i am doing $event-->
+		<button (click)="increment()">Event clicker</button>
+		<p></p>
+		<p>This is Printing counterForEvent: {{ counterForEvent }}</p>	
+		<input
+			placeholder="Type"
+			[value]="textForEvent"
+			(input)="updateText($any($event.target).value)"
+		/>
+		<p>This is Printing textForEvent: {{textForEvent}}</p>
+
+		<!-- now we are going to learn as alias with ngIf -->
+
+		<button (click)="toggleUserDetails()">Toggle User Details</button>
+		<p *ngIf="userDetails as u;else empty">
+			Hello to the user {{ u.name }}, age {{ u.age }}
+		</p>
+		<ng-template #empty>
+			<p>No user details available.</p>
+		</ng-template>
+
+		<!-- now next topic is pipes(|) -->
+		<h3>Pipes in Angular</h3>
+		<p>Original String: {{ sampleString }}</p>
+
+		<!-- these are some of the predefined pipes -->
+		<p>Lowercase: {{ sampleString | uppercase }}</p>
+		<p>Amount in USD: {{ amountInINR | currency:'' }}</p>
+		<p>Today: {{ currentDate | date:'yyyy-MM-dd' }}</p>
+		<p>Chained: {{ ratio | percent:'1.0-0'}}</p>
+
+
+		<!-- Now we are going to learn attribute binding	-->
+		<h3>Attribute Binding in Angular</h3>
+		<button [attr.aria-label]="label"
+				(click)="toggle()">Toggle Button</button>
+		<table border="2" style="margin-top:8px">
+			<tr><th>A</th><th>B</th><th>C</th></tr>
+			<tr><td [attr.colspan]="wide ? 2 : 1">Row 1</td><td>Cell</td><td>Cell</td></tr>
+		</table>
+		<table border="1" style="margin-top:10px">
+			<tr>
+				<th>Attribute</th>
+				<th>Value</th>
+			</tr>
+			<tr>
+				<td>aria-label</td>
+				<td>{{ label }}</td>
+			</tr>
+		</table>
+	
+		<!-- Now we are going to learn attribute binding	-->
+		<h3>Attribute Binding in Angular</h3>
+		<button [attr.aria-label]="label"
+				(click)="toggle()">Toggle Button</button>
+		<table border="2" style="margin-top:8px">
+			<tr><th>A</th><th>B</th><th>C</th></tr>
+			<tr><td [attr.colspan]="wide ? 2 : 1">Row 1</td><td>Cell</td><td>Cell</td></tr>
+		</table>
+		<table border="1" style="margin-top:10px">
+			<tr>
+				<th>Attribute</th>
+				<th>Value</th>
+			</tr>
+			<tr>
+				<td>aria-label</td>
+				<td>{{ label }}</td>
+			</tr>
+		</table>
+
+		<!-- Track By -->
+		<button (click)="shuffle()">Shuffle</button>
+
+		<ol>
+			<li *ngFor="let it of itemms; trackBy: trackById"> <!--  trackby helps to prevent recreation of DOM elements of list -->
+				{{ it.id }} - {{ it.name }}
+			</li>
+		</ol>
+		
+		<!-- Parent component  @Input wala-->
+		<!-- <hello-comp [name]="userName"></hello-comp> -->
+
+		<!-- @Output wala -->
+		
+		<hello-comp 
+			[step]="1" 
+			(clicked)="onChildClicked($event)">
+			<h3>Component Projection (ng-content)</h3>
+			<p>Hello World</p>
+			<button>Click Me</button>
+		</hello-comp>
+		<!-- Angular events -->
+		<h3>Angular Events</h3>
+		<input
+		placeholder="Type here"
+		(input)="onInput($event)"
+		(keyup)="addvalues()"    
+		(keydown)="lastKey = $any($event).key">  <!-- .k means activated only when k is pressed, .enter is when enter is pressed. -->
+		<p>Value is : {{count}}</p>
+		<p>Last key pressed: {{lastKey}}</p>
+		<p>Counter value: {{ctr}}</p>
+		
+		<!-- Debounced Input -->
+		<h3>Debounced Input</h3>
+		<input type="text" placeholder="Type here for debounced input" (input)="onDebouncedInput($event)" />
+		<p> Immediate:{{immediate}}</p>
+		<p>Debounced (400ms): {{debounced}}</p>
+		
+		<!-- Angular conditionals -->
+		<h3>Angular Conditionals</h3>
+		<button (click)="toggleConditional()">Toggle Condition</button>
+		@if(conditionalBool){
+			<p>The condition is TRUE!</p>
+		}@else{
+			<p>The condition is changed to FALSE!</p>
+		}
+		<!-- Now going towards switch case -->
+		<h3>Angular Switch Case</h3>
+		@switch(switchValue){
+			@case('info'){
+				<p style="color: blue">This is an informational message.</p>
+			}
+			@case('warning'){
+				<p style="color: orange">This is a warning message.</p>
+			}
+			@case('error'){
+				<p style="color: red">This is an error message.</p>
+			}
+			@default{
+				<p style="color: green">This is a default message.</p>
+			}
+		}
+		<!-- now we are going to do angular lists -->
+		<h3>Angular Lists</h3>
+		<button (click)="addItem()">Add Item</button>
+		<button (click)="removeItem()">Pop Item</button>
+		<button (click)="clearList()">Clear List</button>
+		<ol> 
+			@for (item of AngularList;let i =$index;track item){
+				<li>{{item}}</li>
+			}@empty{
+				<li> No items available in the list to display. </li>
+			}
+		</ol>
+		
+		<!-- Angular lists with track -->
+		<h3>Angular Lists with Track By</h3>
+		<button (click)="addListItem()">Add Item</button>
+		<button (click)="renameFirst()">Rename First</button>	
+		<button (click)="shuffleList()">Shuffle List</button>
+		<button (click)="SortByIdAsc()">Sort By Id Asc</button>
+		<button (click)="SortByIdDsc()">Sort By Id Dsc</button>
+		<ul>
+			@for (it of AngularListWithTrack(); let i = $index; track it.id){
+				<li> {{ it.name }} (id: {{ it.id }})</li>
+			}
+		</ul>
+		
+		<!-- Template Drive forms: -->
+		<h3>Template Driven Forms</h3>
+		<form #f="ngForm" (ngSubmit)="onSubmit()"> <!-- #f exports the form state e.g. f,valid and f.invalid. and the submit method handles the submit using the component method-->
+			<label>
+				<input
+				type="text"
+				name="name"
+				[(ngModel)]="Formname"
+				#nameForm="ngModel"
+				placeholder="Enter your name"
+				required minlength="3"
+				>
+			</label>
+			<div *ngIf="nameForm.invalid && (nameForm.dirty || nameForm.touched || submitted)" style="color:red">INVALID Name!<br><!-- Validation checking is done here-->
+				<small *ngIf="nameForm.errors && nameForm.errors['required']">Name is required.</small>
+				<small *ngIf="nameForm.errors && nameForm.errors['minlength']">Name must be at least 3 characters.</small>
+			</div><br>
+			<button type="submit" [disabled]="f.invalid">Submit</button> <!-- submit button remains disabled until the form filled is correct.-->
+		</form>
+		<p *ngIf="submitted">Submitted!</p>
+		<p>Value: {{ Formname }}</p>
+		
+		
+			</div>
+			<div class="right">
+			
+		<!-- Angular form elements -->
+		<h3> Angular Template driven elements</h3>
+		<input name = "email" type="email" [(ngModel)]="model.email" required minlength="3" #email="ngModel" placeholder="Enter Email validation implemented"><br><br> <!-- Minimum 3 letters are required. -->
+		<div *ngIf="email.invalid && (email.dirty || email.touched || submitted)" style="color:red">INVALID Email!<br><!-- Validation checking is done here-->
+			<small *ngIf="email.errors && email.errors['required']">Email is required.</small>
+			<small *ngIf="email.errors && email.errors['minlength']">Email must be at least 3 characters.</small>
+		</div>
+		<br>
+		<textarea name = "bio" [(ngModel)]="model.bio" placeholder="Enter Bio"></textarea><br><br> <!-- text area is used to input large number of inputs. -->
+		<label> <input type ="checkbox" name="Agree?" [(ngModel)]="model.agree" > Agree? </label>
+		<br>
+		<!-- <h4>Radio Buttons</h4> -->
+		<label> <input type="radio" name = "color" [value] ="'red'" [(ngModel)]="model.color">Red</label>
+		<label> <input type="radio" name = "color" [value] ="'blue'" [(ngModel)]="model.color">Blue</label>
+		<label> <input type="radio" name = "color" [value] ="'cyan'" [(ngModel)]="model.color">Cyan</label>
+		<br>
+		<label><input type="radio" name="size" [value]="'1'" [(ngModel)]="model.size"> Small</label>
+		<label><input type="radio" name="size" [value]="'2'" [(ngModel)]="model.size"> Medium</label>
+		<label><input type="radio" name="size" [value]="'3'" [(ngModel)]="model.size"> Large</label>
+		<br>
+		<select name = "pet" [(ngModel)]="model.pet"> <!-- two-way binding is used here to bind -->
+			<option value="" disabled selected hidden>Select a pet</option> <!-- we use disabled select hidden to hide the first option -->
+			<option value="dog">Dog</option>
+			<option value="cat">Cat</option>
+			<option value="hamster">Hamster</option>
+		</select>
+
+		<br>
+		<h4>Submitted angular values are:</h4>
+		<p>Email is: {{model.email}}</p>
+		<p>bio is: {{model.bio}}</p>
+		<p>Agree?: {{model.agree}}</p>
+		<p>Color is: {{model.color}}</p>
+		<p>Pet is: {{model.pet}}</p>
+		<p>Size is: {{model.size}}</p>
+
+		<select name="tags" [(ngModel)]="model.tags" multiple>
+			<option [ngValue]="'news'">News</option>
+			<option [ngValue]="'infortainment'">Infotainment</option>
+			<option [ngValue]="'tech'">Tech</option>
+			<option [ngValue]="'sports'">Sports</option>
+		</select>
+		<br><br>
+		<label>
+		Age:
+		<input
+			type="number"
+			name="age"
+			[ngModel]="age"
+			(ngModelChange)="onAgeChange($event)">
+		</label>
+		<p>Entered Age: {{ age }}</p>
+
+		<!-- Now heading to file management in forms-->
+		<h3> File Management</h3>
+		<label> Select Files: <input type ="file" multiple (change)="onFiles($event)"></label>
+		<ul>
+			<li *ngFor="let file of selectedFile">{{file.name}} ({{file.size}} bytes)</li>
+		</ul>
+
+		<!-- Reactive Forms -->
+		<h3>Reactive Forms</h3>
+		<form [formGroup]="form" (ngSubmit)="onSubmitReactive()">
+		<label>
+			Name
+			<input formControlName="name" placeholder="Your name">
+		</label>
+		<div *ngIf="form.controls.name.invalid && (form.controls.name.dirty || form.controls.name.touched || submittedReactive)" style="color:crimson">
+			<small *ngIf="form.controls.name.errors && form.controls.name.errors['required']">Name is required.</small>
+			<small *ngIf="form.controls.name.errors?.['minlength']">Min 3 characters.</small>
+		</div>
+		<br>
+		<label>
+			Email
+			<input formControlName="email" placeholder="you@example.com">
+		</label>
+		<div *ngIf="form.controls.email.invalid && (form.controls.email.dirty || form.controls.email.touched || submittedReactive)" style="color:crimson">
+			<small *ngIf="form.controls.email.errors && form.controls.email.errors['required']">Email is required.</small>
+			<small *ngIf="form.controls.email.errors?.['email']">Email must be valid.</small>
+		</div>
+		<br>
+		<label>
+			<input type="checkbox" formControlName="newsletter" >
+			Subscribe to newsletter
+		</label>
+		<br>
+		<button type="submit" [disabled]="form.invalid">Submit</button> <!-- submit button remains disabled until the form filled is correct.-->
+		</form>
+
+		<p>Status: {{ form.status }}</p>
+		<p>Value: {{ form.value |  json }}</p>
+		<p *ngIf="submittedReactive" style="color: seagreen;">Submitted!</p>
+	</div>
+</div>

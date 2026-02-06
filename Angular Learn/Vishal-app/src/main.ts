@@ -13,5 +13,5 @@ import { Component } from '@angular/core';
 */
 import { App } from './app/app';
 
-bootstrapApplication(App)
-  .catch(err => console.error(err));
+bootstrapApplication(App, appConfig)
+  	.catch(err => console.error(err));

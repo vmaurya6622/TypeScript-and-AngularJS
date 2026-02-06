@@ -1,22 +1,27 @@
+// import { Component } from '@angular/core';
+
+// import { Component } from "@angular/compiler";
+
+// import { CommonModule } from '@angular/common';
+// import { HelloComponent } from './hello.component';
+// import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+// import { RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { Component, Input, signal } from '@angular/core';
 import { HelloComponent } from './hello.component';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RouterLink, RouterOutlet } from '@angular/router';
-// import it from '@angular/common/locales/extra/it';
-// import { CounterButtonComponent } from './hello.component';
 
 type Item = { id: number, name: string }
 @Component({
-	selector: 'app-root',
+	selector: 'app-home',
 	standalone: true,
-	imports: [CommonModule, HelloComponent, FormsModule, ReactiveFormsModule, RouterOutlet, RouterLink],
-	templateUrl: './app.html',
+	imports: [CommonModule, HelloComponent, FormsModule, ReactiveFormsModule, RouterLink],
+	templateUrl: './home.component.html',
 	styleUrls: ['./app.css']
 })
 
-
-export class App { // this will only work when we export this class
+export class HomeComponent { // this will only work when we export this class
 	name = 'Angular 20';
 	ok = true; // i made this to check for ngIf directive
 	items = ['apple', 'banana', 'mango', 'orange', 'grapes']; // i made this to check for ngFor directive

@@ -262,7 +262,14 @@ Angluar Validations:
 
 ========================================================================================
 
-
+Angular Routes:
+    -> we can use routes to render more than one page in HTML. it overpowers the traditional 
+        loading of HTML pages whenever we click an element for new pages.
+    -> Now, angular SPA(single page application) needs only one HTML page and we change the HTML
+        angular swaps componenets onstead of reloading the page.
+    -> The router swaps views based on the URL. this in a sense means what we see is due to URL
+        different URLs -> different components.
+     
 
 ========================================================================================
 
