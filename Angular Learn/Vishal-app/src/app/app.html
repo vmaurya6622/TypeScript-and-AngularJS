@@ -283,10 +283,6 @@
 				<p style="color: green">This is a default message.</p>
 			}
 		}
-	
-		</div>
-		<div class="right">
-		
 		<!-- now we are going to do angular lists -->
 		<h3>Angular Lists</h3>
 		<button (click)="addItem()">Add Item</button>
@@ -299,7 +295,7 @@
 				<li> No items available in the list to display. </li>
 			}
 		</ol>
-
+		
 		<!-- Angular lists with track -->
 		<h3>Angular Lists with Track By</h3>
 		<button (click)="addListItem()">Add Item</button>
@@ -312,10 +308,10 @@
 				<li> {{ it.name }} (id: {{ it.id }})</li>
 			}
 		</ul>
-
+		
 		<!-- Template Drive forms: -->
 		<h3>Template Driven Forms</h3>
-		<form #f="ngForm" (ngSubmit)="onSubmit()">
+		<form #f="ngForm" (ngSubmit)="onSubmit()"> <!-- #f exports the form state e.g. f,valid and f.invalid. and the submit method handles the submit using the component method-->
 			<label>
 				<input
 				type="text"
@@ -328,7 +324,75 @@
 			<br><br>
 			<button type="submit" [disabled]="f.invalid">Submit</button>
 		</form>
-		<p>Value: {{ Formname }}</p>
 		<p *ngIf="submitted">Submitted!</p>
+		<p>Value: {{ Formname }}</p>
+		
+		
+			</div>
+			<div class="right">
+			
+		<!-- Angular form elements -->
+		<h3> Angular Template driven elements</h3>
+		<input name = "email" type="email" [(ngModel)]="model.email" required minlength="3" #email="ngModel" placeholder="Enter Email"><br><br> <!-- Minimum 3 letters are required. -->
+		<div *ngIf="email.invalid && (email.dirty || email.touched || submitted)" style="color:red">INVALID Email!<br><!-- Validation checking is done here-->
+			<small *ngIf="email.errors && email.errors['required']">Email is required.</small>
+			<small *ngIf="email.errors && email.errors['minlength']">Email must be at least 3 characters.</small>
+		</div>
+		<br>
+		<textarea name = "bio" [(ngModel)]="model.bio" placeholder="Enter Bio"></textarea><br><br> <!-- text area is used to input large number of inputs. -->
+		<label> <input type ="checkbox" name="Agree?" [(ngModel)]="model.agree" > Agree? </label>
+		<!-- <h4>Radio Buttons</h4> -->
+		<label> <input type="radio" name = "color" [value] ="'red'" [(ngModel)]="model.color">Red</label>
+		<label> <input type="radio" name = "color" [value] ="'blue'" [(ngModel)]="model.color">Blue</label>
+		<label> <input type="radio" name = "color" [value] ="'cyan'" [(ngModel)]="model.color">Cyan</label>
+		<br>
+		<label><input type="radio" name="size" [value]="'1'" [(ngModel)]="model.size"> Small</label>
+		<label><input type="radio" name="size" [value]="'2'" [(ngModel)]="model.size"> Medium</label>
+		<label><input type="radio" name="size" [value]="'3'" [(ngModel)]="model.size"> Large</label>
+		<br>
+		<select name = "pet" [(ngModel)]="model.pet"> <!-- two-way binding is used here to bind -->
+			<option value="" disabled selected hidden>Select a pet</option> <!-- we use disabled select hidden to hide the first option -->
+			<option value="dog">Dog</option>
+			<option value="cat">Cat</option>
+			<option value="hamster">Hamster</option>
+		</select>
+
+		<br>
+		<h4>Submitted angular values are:</h4>
+		<p>Email is: {{model.email}}</p>
+		<p>bio is: {{model.bio}}</p>
+		<p>Agree?: {{model.agree}}</p>
+		<p>Color is: {{model.color}}</p>
+		<p>Pet is: {{model.pet}}</p>
+		<p>Size is: {{model.size}}</p>
+
+		<select name="tags" [(ngModel)]="model.tags" multiple>
+			<option [ngValue]="'news'">News</option>
+			<option [ngValue]="'infortainment'">Infotainment</option>
+			<option [ngValue]="'tech'">Tech</option>
+			<option [ngValue]="'sports'">Sports</option>
+		</select>
+		<br><br>
+		<label>
+		Age:
+		<input
+			type="number"
+			name="age"
+			[ngModel]="age"
+			(ngModelChange)="onAgeChange($event)">
+		</label>
+		<p>Entered Age: {{ age }}</p>
+
+		<!-- Now heading to file management in forms-->
+		<h3> File Management</h3>
+		<label> Select Files: <input type ="file" multiple (change)="onFiles($event)"></label>
+		<ul>
+			<li *ngFor="let file of selectedFile">{{file.name}} ({{file.size}} bytes)</li>
+		</ul>
+
+		<!-- validation rules -->
+		<h3>Validation Rules</h3>
+		<!-- <input name="email" [(ngModel)]="email" placeholder="Enter the email: " email required #e -->
+
 	</div>
 </div>

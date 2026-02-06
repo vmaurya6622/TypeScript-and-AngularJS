@@ -203,8 +203,7 @@ export class App { // this will only work when we export this class
 		this.AngularListWithTrack.update(a => [...a, { id: this.nextIdtobeInserted++, name: 'New Sonam' }]);
 	}
 	SortByIdAsc() {
-		this.AngularListWithTrack.update(a => [...a].sort((x, y) => x.id - y.id));
-	}
+		this.AngularListWithTrack.update(a => [...a].sort((x, y) => x.id - y.id));	}
 	SortByIdDsc() {
 		this.AngularListWithTrack.update(a => [...a].sort((x, y) => y.id - x.id));
 	}
@@ -213,5 +212,31 @@ export class App { // this will only work when we export this class
 
 	Formname = '';
 	submitted = false;
-	onSubmit() { this.submitted = true; }
+	onSubmit() {
+		this.submitted = true;
+	}
+
+	//  Angular Forms
+	model = {
+		email: '', bio: '', agree: false, pet: '', color: '', size: '', tags: ''
+	}
+
+	//Manual two way binding
+	age: number | null = null; // using union type so age ya toh number ho sakta hai ya phir null but default NULL
+	onAgeChange(value: number) {
+		this.age = value;
+	}
+
+	//File management
+	selectedFile:File[]=[]; // this is an array of file objects and initially no file is selected that's why it's empty.
+	onFiles(event:Event){
+		const input=event.target as HTMLInputElement;
+		if(!input.files) return;
+		this.selectedFile=Array.from(input.files);
+		this.selectedFile.forEach(file => {
+			console.log(`File name: ${file.name}, size: ${file.size} bytes`);
+		});
+	}
+	
+	
 }

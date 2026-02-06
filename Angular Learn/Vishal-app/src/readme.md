@@ -187,9 +187,12 @@ Angular data Binding:
         read only bindings.
     -> [prop]="value" HTML element ki property ko TS value deta hai.
     -> (event)=handler($event) -> ye HTML event ko TS method se connect karta hai. so it handles user actions.
-    -> [(ngModel)]="value" -> TS ↔ HTML dono side data sync hota hia.
+    -> 2-way data binding: [(ngModel)]="value" -> TS ↔ HTML dono side data sync hota hia.
         -> Agar input box me user kuch type kare → value TypeScript variable me update ho jaati hai
         -> Agar TypeScript me variable change ho → UI automatically update ho jaata hai
+        -> [] are used for property binding {data component to view} and () is used for event binding (data view to component)
+        -> agar tum ek jgah type karoge toh data dono jgah updated rahega.
+
 
 ========================================================================================
 
@@ -250,7 +253,9 @@ Angular Lists:
 
 ========================================================================================
 
-
+    -> we add validataion rules like required, minlength and email.
+    -> it shows errors when invalid control is either dirty or touched or after submit.
+    -> we will siable submit when the form is invalid.
 
 ========================================================================================
 
