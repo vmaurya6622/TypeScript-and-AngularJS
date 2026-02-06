@@ -317,12 +317,16 @@
 				type="text"
 				name="name"
 				[(ngModel)]="Formname"
+				#nameForm="ngModel"
 				placeholder="Enter your name"
-				required
+				required minlength="3"
 				>
 			</label>
-			<br><br>
-			<button type="submit" [disabled]="f.invalid">Submit</button>
+			<div *ngIf="nameForm.invalid && (nameForm.dirty || nameForm.touched || submitted)" style="color:red">INVALID Name!<br><!-- Validation checking is done here-->
+				<small *ngIf="nameForm.errors && nameForm.errors['required']">Name is required.</small>
+				<small *ngIf="nameForm.errors && nameForm.errors['minlength']">Name must be at least 3 characters.</small>
+			</div><br>
+			<button type="submit" [disabled]="f.invalid">Submit</button> <!-- submit button remains disabled until the form filled is correct.-->
 		</form>
 		<p *ngIf="submitted">Submitted!</p>
 		<p>Value: {{ Formname }}</p>
@@ -333,7 +337,7 @@
 			
 		<!-- Angular form elements -->
 		<h3> Angular Template driven elements</h3>
-		<input name = "email" type="email" [(ngModel)]="model.email" required minlength="3" #email="ngModel" placeholder="Enter Email"><br><br> <!-- Minimum 3 letters are required. -->
+		<input name = "email" type="email" [(ngModel)]="model.email" required minlength="3" #email="ngModel" placeholder="Enter Email validation implemented"><br><br> <!-- Minimum 3 letters are required. -->
 		<div *ngIf="email.invalid && (email.dirty || email.touched || submitted)" style="color:red">INVALID Email!<br><!-- Validation checking is done here-->
 			<small *ngIf="email.errors && email.errors['required']">Email is required.</small>
 			<small *ngIf="email.errors && email.errors['minlength']">Email must be at least 3 characters.</small>
@@ -341,6 +345,7 @@
 		<br>
 		<textarea name = "bio" [(ngModel)]="model.bio" placeholder="Enter Bio"></textarea><br><br> <!-- text area is used to input large number of inputs. -->
 		<label> <input type ="checkbox" name="Agree?" [(ngModel)]="model.agree" > Agree? </label>
+		<br>
 		<!-- <h4>Radio Buttons</h4> -->
 		<label> <input type="radio" name = "color" [value] ="'red'" [(ngModel)]="model.color">Red</label>
 		<label> <input type="radio" name = "color" [value] ="'blue'" [(ngModel)]="model.color">Blue</label>
@@ -390,9 +395,37 @@
 			<li *ngFor="let file of selectedFile">{{file.name}} ({{file.size}} bytes)</li>
 		</ul>
 
-		<!-- validation rules -->
-		<h3>Validation Rules</h3>
-		<!-- <input name="email" [(ngModel)]="email" placeholder="Enter the email: " email required #e -->
+		<!-- Reactive Forms -->
+		<h3>Reactive Forms</h3>
+		<form [formGroup]="form" (ngSubmit)="onSubmitReactive()">
+		<label>
+			Name
+			<input formControlName="name" placeholder="Your name">
+		</label>
+		<div *ngIf="form.controls.name.invalid && (form.controls.name.dirty || form.controls.name.touched || submittedReactive)" style="color:crimson">
+			<small *ngIf="form.controls.name.errors && form.controls.name.errors['required']">Name is required.</small>
+			<small *ngIf="form.controls.name.errors?.['minlength']">Min 3 characters.</small>
+		</div>
+		<br>
+		<label>
+			Email
+			<input formControlName="email" placeholder="you@example.com">
+		</label>
+		<div *ngIf="form.controls.email.invalid && (form.controls.email.dirty || form.controls.email.touched || submittedReactive)" style="color:crimson">
+			<small *ngIf="form.controls.email.errors && form.controls.email.errors['required']">Email is required.</small>
+			<small *ngIf="form.controls.email.errors?.['email']">Email must be valid.</small>
+		</div>
+		<br>
+		<label>
+			<input type="checkbox" formControlName="newsletter" >
+			Subscribe to newsletter
+		</label>
+		<br>
+		<button type="submit" [disabled]="form.invalid">Submit</button> <!-- submit button remains disabled until the form filled is correct.-->
+		</form>
 
+		<p>Status: {{ form.status }}</p>
+		<p>Value: {{ form.value |  json }}</p>
+		<p *ngIf="submittedReactive" style="color: seagreen;">Submitted!</p>
 	</div>
 </div>

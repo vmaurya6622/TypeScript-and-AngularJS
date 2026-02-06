@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input, signal } from '@angular/core';
 import { HelloComponent } from './hello.component';
-import { FormsModule } from '@angular/forms';
+import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 // import it from '@angular/common/locales/extra/it';
 // import { CounterButtonComponent } from './hello.component';
 
@@ -9,7 +9,7 @@ type Item = { id: number, name: string }
 @Component({
 	selector: 'app-root',
 	standalone: true,
-	imports: [CommonModule, HelloComponent, FormsModule],
+	imports: [CommonModule, HelloComponent, FormsModule, ReactiveFormsModule],
 	templateUrl: './app.html',
 	styleUrls: ['./app.css']
 })
@@ -203,7 +203,8 @@ export class App { // this will only work when we export this class
 		this.AngularListWithTrack.update(a => [...a, { id: this.nextIdtobeInserted++, name: 'New Sonam' }]);
 	}
 	SortByIdAsc() {
-		this.AngularListWithTrack.update(a => [...a].sort((x, y) => x.id - y.id));	}
+		this.AngularListWithTrack.update(a => [...a].sort((x, y) => x.id - y.id));
+	}
 	SortByIdDsc() {
 		this.AngularListWithTrack.update(a => [...a].sort((x, y) => y.id - x.id));
 	}
@@ -228,15 +229,30 @@ export class App { // this will only work when we export this class
 	}
 
 	//File management
-	selectedFile:File[]=[]; // this is an array of file objects and initially no file is selected that's why it's empty.
-	onFiles(event:Event){
-		const input=event.target as HTMLInputElement;
-		if(!input.files) return;
-		this.selectedFile=Array.from(input.files);
+	selectedFile: File[] = []; // this is an array of file objects and initially no file is selected that's why it's empty.
+	onFiles(event: Event) {
+		const input = event.target as HTMLInputElement;
+		if (!input.files) return;
+		this.selectedFile = Array.from(input.files);
 		this.selectedFile.forEach(file => {
 			console.log(`File name: ${file.name}, size: ${file.size} bytes`);
 		});
 	}
-	
-	
+
+	//Reactive Forms
+	fb = new FormBuilder();
+	submittedReactive = false;
+	form = this.fb.group({
+		name: ['', [Validators.required, Validators.minLength(3)]],
+		email: ['', [Validators.required, Validators.email]],
+		newsletter: [false],
+	});
+
+	onSubmitReactive() {
+		this.submittedReactive = true;
+		if (this.form.valid) {
+			console.log(this.form.value);
+		}
+	}
+
 }
