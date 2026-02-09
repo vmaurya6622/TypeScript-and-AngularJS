@@ -300,7 +300,14 @@ Angular Routes:
 
 ========================================================================================
 
-
+Angular Services and Dependency Injection
+    -> a service is a class that holds reusable logic,shared state, business rules, data fetching
+        cross component behaviour.
+    -> components focus on UI and services focus on logic.
+    -> dependency injection is where we don't create objects angular creates them by its own and gives us.
+    -> instead of const counter=new CounterService();
+        we do constructor(counter:CounterService()){}
+        herein, angular creates an instance and injects it automatically.
 
 ========================================================================================
 
