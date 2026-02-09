@@ -269,11 +269,34 @@ Angular Routes:
         angular swaps componenets onstead of reloading the page.
     -> The router swaps views based on the URL. this in a sense means what we see is due to URL
         different URLs -> different components.
-     
+    -> RouterOutlet is a placeholder where the active route's component appears. so, it says render 
+        current page here.
+    -> routerLink is used for navigation without reloading the whole page.
+    -> RouterLinkActive adds css when a link is active
+    -> withHashLocation is useful for sandboxes as there are no server configurations needed.
+
+    Router Parameters:
+        -> /product/42
+        -> in this case, product is the fixed route and 42 is the parameter value.
+        -> :id is a placeholder and it is written after the fixed route.
+
+    -> Activated Route is an angular service from where it gets current route's data.
+    -> abhi URL me kya chal rha hai, kaunsa parameter aaya hai, query parameters kya hai, ye sab 
+        ActivatedRoute batata hai.
+    ->  
 
 ========================================================================================
 
-
+    -> Lazy loading: means load component when only it's needed.
+    -> Angular downloads all of the components at startup so it may lead to slow loading of the page.
+    -> with lazy loading:
+        -> only critical routes loads first.
+        -> other routes are loaded on demand.
+        -> this leads to smaller inital bundle.
+    -> we use loadComponent which works with NgModules only which are fetched when user navigates to it.
+    -> Route guard is used to ensure the access to specific part of the webpages and checks whether the
+        user is allowed to access that page or not?
+    -> we use authGuard to control the access.
 
 ========================================================================================
 

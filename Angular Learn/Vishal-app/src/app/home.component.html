@@ -428,5 +428,11 @@
 		<p>Value: {{ form.value |  json }}</p>
 		<p *ngIf="submittedReactive" style="color: seagreen;">Submitted!</p>
 
+        <h3>Security access using authorisation: AuthGuard </h3>
+        <button (click)="loginUser()">Login</button>
+        <button (click)="logoutUser()">Logout</button>
+        <p>Current Login Status: {{ getUserStatus() ? 'Logged In' : 'Logged Out' }}</p>
+        <a routerLink="/protected">Go to (Protected) page</a><br>
 	</div>
 </div>
+<!-- <router-outlet></router-outlet> -->

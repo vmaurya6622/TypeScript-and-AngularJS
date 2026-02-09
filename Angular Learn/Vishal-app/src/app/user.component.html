@@ -1,0 +1,42 @@
+<!-- <button routerLink="/about">Go to About Page</button> -->
+<!-- Angular lifecycle hooks and ActivatedRoute-->
+<div>
+    <h3>Angular Lifecycle Hooks and ActivatedRoute</h3>
+    <p>User Id what you Entered is: {{userId}}  <br>UserId will not be visible if you access this page using authorisation.</p>
+    <!-- Go to : http://localhost:4200/user/15 to see the userID via ActivatedRoute -->
+
+
+    <div class="protected-container">
+    <h2>🔐 Protected Page</h2>
+
+    <p class="info">
+        This page is protected using <strong>AuthGuard</strong>.
+        Only authenticated users are allowed to access this route.<br>
+        <strong>Note: you can use the authorisation option in the home  page to check this feature.</strong> 
+    </p>
+
+    <div class="status">
+        <span class="badge success">Access Granted</span>
+    </div>
+
+    <p class="note">
+        If you are seeing this page, it means:
+    </p>
+
+    <ul>
+        <li>You are logged in</li>
+        <li>The <code>canActivate</code> guard returned <strong>true</strong></li>
+        <li>Angular allowed route navigation</li>
+    </ul>
+
+    <hr />
+
+    <p class="hint">
+        Try logging out and navigating to this route again —
+        you will be redirected to the Home page.
+    </p>
+
+    <a routerLink="/" class="btn">⬅ Back to Home</a>
+    </div>
+
+</div>
