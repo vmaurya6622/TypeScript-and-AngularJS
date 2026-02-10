@@ -7,21 +7,75 @@
 // import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 // import { RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { Component, Input, signal, OnInit, inject } from '@angular/core';
+import { Component, Input, signal, OnInit, inject, Injectable } from '@angular/core';
 import { HelloComponent } from './hello.component';
 // import { userComponent } from './user.component';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RouterLink, RouterOutlet, ActivatedRoute, Router } from '@angular/router';
-import { authGuard,getLoginStatus,setLoginStatus,setLogoutStatus} from './auth.guard';
+import { authGuard, getLoginStatus, setLoginStatus, setLogoutStatus } from './auth.guard';
+import { HttpClient } from '@angular/common/http';
+import { HttpDemoComponent } from './Http.demo';
+
+
+// Component-Provided Service (Hierarchical DI)
+
+@Injectable()
+export class LocalCounterService {
+    id = Math.floor(Math.random() * 10000);
+    value = 0;
+    inc() { this.value++; }
+}
+
+@Component({
+    selector: 'counter-view',
+    standalone: true,
+    template: `
+        <p>Service #{{ svc.id }} value: {{ svc.value }}</p>
+        <button (click)="svc.inc()">+1</button>
+    `
+})
+export class CounterView {
+    constructor(public svc: LocalCounterService) { }
+}
+
+@Component({
+    selector: 'panel-a',
+    standalone: true,
+    imports: [CommonModule, CounterView],
+    providers: [LocalCounterService], // this line is responsible for creating new instances 
+    //  isi ki wjah se same cards par multiple types ho sakte h
+
+    template: `
+        <h4>Panel A (own provider)</h4>
+        <counter-view></counter-view>
+        <counter-view></counter-view>
+    `
+})
+export class PanelA { }
+
+@Component({
+    selector: 'panel-b',
+    standalone: true,
+    imports: [CommonModule, CounterView],
+    providers: [LocalCounterService],
+    template: `
+        <h4>Panel B (own provider)</h4>
+        <counter-view></counter-view>
+        <counter-view></counter-view>
+    `
+})
+export class PanelB { }
+
 
 type Item = { id: number, name: string }
 @Component({
     selector: 'app-home',
     standalone: true,
-    imports: [CommonModule, HelloComponent, FormsModule, ReactiveFormsModule, RouterLink],
+    imports: [CommonModule, HelloComponent, FormsModule, ReactiveFormsModule, RouterLink, PanelA, PanelB, HttpDemoComponent],
     templateUrl: './home.component.html',
     styleUrls: ['./app.css']
 })
+
 
 export class HomeComponent { // this will only work when we export this class
     name = 'Angular 20';
@@ -262,16 +316,53 @@ export class HomeComponent { // this will only work when we export this class
             console.log(this.form.value);
         }
     }
-    
-    loginUser(){
+
+    loginUser() {
         setLoginStatus()
     }
-    logoutUser(){
+    logoutUser() {
         setLogoutStatus()
     }
-    getUserStatus():boolean{
+    getUserStatus(): boolean {
         return getLoginStatus()
     }
+
+    //Service and dependency Injection
+    constructor(public counterService: CounterService) { }
+
+    //hierarchical injectors and local providers
+    // constructor(public svc: LocalCounterService) { }
+
+    //HTTP client GET
+    http = inject(HttpClient);
+    users: any[] = [];
+    loading = false;
+    error = '';
+    load() {
+        this.loading = true;
+        this.error = '';
+        this.http.get<any[]>('https://jsonplaceholder.typicode.com/users')
+            .subscribe({
+                next: (data) => { this.users = data; this.loading = false; },
+                error: () => { this.error = 'Failed to load users'; this.loading = false; }
+            });
+    }
+
+    result: any = null;
+    createPost() {
+        this.loading = true;
+        this.error = '';
+        this.result = null;
+        this.http.post<any>('https://jsonplaceholder.typicode.com/posts', {
+            title: 'foo',
+            body: 'bar',
+            userId: 1101
+        }).subscribe({
+            next: (res) => { this.result = res; this.loading = false; },
+            error: () => { this.error = 'Failed to create post'; this.loading = false; }
+        });
+    }
+
 }
 
 @Component({
@@ -285,8 +376,19 @@ export class HomeComponent { // this will only work when we export this class
 export class userComponent implements OnInit { // this will only work when we export this class
     //Angular lifecycle hooks and ActivatedRoute
     userId!: string | null; /* !: is used to tell typescript that this variable will be initialized later and it won't be undefined when accessed. */
-    constructor(private route: ActivatedRoute) {}
+    constructor(private route: ActivatedRoute) { }
     ngOnInit() {
-        this.userId=this.route.snapshot.paramMap.get('id'); // this will get the 'id' parameter from the route and assign it to userId variable.    
+        this.userId = this.route.snapshot.paramMap.get('id'); // this will get the 'id' parameter from the route and assign it to userId variable.    
     }
-} 
+}
+@Injectable({ providedIn: 'root' }) // it registers the service at the root level, making it available throughout the application
+//                                       without needing to add it to the providers array of any specific module or component.
+//-> we use @Injectable if a service injects other service so that DI can generate metadata.
+
+export class CounterService {
+    value = 0; // this is a variable with shared state.
+    increment() { this.value++; }
+    decrement() { this.value--; }
+    reset() { this.value = 0; }
+}
+

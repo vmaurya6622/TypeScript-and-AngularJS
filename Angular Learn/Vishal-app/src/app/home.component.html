@@ -332,9 +332,7 @@
 		<p>Value: {{ Formname }}</p>
 		
 		
-			</div>
-			<div class="right">
-			
+        
 		<!-- Angular form elements -->
 		<h3> Angular Template driven elements</h3>
 		<input name = "email" type="email" [(ngModel)]="model.email" required minlength="3" #email="ngModel" placeholder="Enter Email validation implemented"><br><br> <!-- Minimum 3 letters are required. -->
@@ -433,6 +431,52 @@
         <button (click)="logoutUser()">Logout</button>
         <p>Current Login Status: {{ getUserStatus() ? 'Logged In' : 'Logged Out' }}</p>
         <a routerLink="/protected">Go to (Protected) page</a><br>
+
+        <!-- Services and Depedency Injection!-->
+        <h3>Services and Dependency Injection</h3>
+        <p>Counter:{{counterService.value}}</p>
+        <button (click)="counterService.increment()">+</button>
+        <button (click)="counterService.decrement()">-</button>
+        <button (click)="counterService.reset()">Reset</button>
+        <!-- <br> -->
+        <p> </p>
+        </div>
+        <div class="right">
+        <!-- Component-Provided Service (Hierarchical DI) -->
+         <div style="border: 3px solid #189f79;border-radius: 12px;padding: 10px;">
+            <h3>Component-Provided Service (Hierarchical DI)</h3>
+            <p>Each panel provides its own service instance.</p>
+            <p>Counters inside the same panel share the instance.</p>
+            <p>Different panels do not.</p>
+            <div class="grid">
+                <panel-a></panel-a>
+                <panel-b></panel-b>
+            </div>
+        </div>
+        <div style="border: 3px solid #189f79;border-radius: 12px;padding: 10px;margin-top: 16px;">
+            <h3>HTTP Client GET</h3>
+            <button (click)="load()">Load Users</button>
+            <p *ngIf="loading">Loading...</p>
+            <p *ngIf="error" style="color:crimson">{{ error }}</p>
+            <ul>
+                <li *ngFor="let u of users">{{ u.name }} ({{ u.email }}) ({{u.website}})</li>
+            </ul>
+        </div>
+        
+        
+        <div style="border: 3px solid #189f79;border-radius: 12px;padding: 10px;margin-top: 16px;">
+            <h3>HTTP Client POST</h3>
+                <button (click)="createPost()" [disabled]="loading">Create Post</button>
+                <p *ngIf="loading">Sending...</p>
+                <p *ngIf="error" style="color:crimson">{{ error }}</p>
+                <div *ngIf="result">
+                <p>Created Post ID: {{ result.id }}</p>
+                <p>Title: {{ result.title }}</p>
+            </div>
+        </div>
+
+		<app-http-demo></app-http-demo>
+
 	</div>
 </div>
 <!-- <router-outlet></router-outlet> -->

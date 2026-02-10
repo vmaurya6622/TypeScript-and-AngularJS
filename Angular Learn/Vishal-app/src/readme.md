@@ -308,22 +308,70 @@ Angular Services and Dependency Injection
     -> instead of const counter=new CounterService();
         we do constructor(counter:CounterService()){}
         herein, angular creates an instance and injects it automatically.
+    Without DI:
+        Tight coupling
+        Hard to test
+        Hard to swap implementations
+    With DI:
+        Loose coupling
+        Easy mocking (tests)
+        Easy to change implementations later
+
+    IMP for injection:
+        -> If a service injects other services, @Injectable() is REQUIRED
+        -> If it injects nothing, Angular might work without it, but don’t rely on that
+        -> providedIn: 'root' = singleton // it means - singleton, app-wide, lazily created, automatically cleaned up.
+    Standalone bootstrapping ensures providers are registered where needed and use inject() in funcitonal contructs.
 
 ========================================================================================
 
-
-
-========================================================================================
-
-
-
-========================================================================================
-
-
+    Shared service across components:
+        one service instance 
+    -> shared across multiple components.
+    -> synchronize state automatically.
+    -> no I/O, events, manual syncing, DI just does it automatically.
 
 ========================================================================================
 
+    Hierarchical Dependency injection:
+        -> provide a service in a component's providers to create a local instance for its subtree.
+        -> sibling subtree receive separeate instances of the class.
+        -> service jis component ke providers me hoti hai usi component ke subtree ke 
+            lie naya instance banta hai.
+        ->  imagine Dashboard
+            ├── User Card
+            ├── Orders Card
+            ├── Revenue Card
+            └── Notifications Card
+            Har card:
+                Same component se bana
+                Apna data
+                Apna lifecycle
+                Apni API call
+            so, now agar sab same service use karein toh sabhi cards ka data mix ho sakta hai.
+            it create independent instances means ki har counter alag alag hoga. i mean values 
+            usko inherit toh karege but instance naya ban jayega.
 
+========================================================================================
+
+HTTP Essentials:
+    -> HttpClient in angular is used to GET/ POST/ PUT/ DELETE data.
+    -> we work with JSON Api's as it is asynchronous and non-blocking.
+    -> angular HTTP returns observables and not promises
+
+========================================================================================
+
+RxJS -> it stands for reactive extensions for javaScript - its  a library which handles asynchronous
+        data streams.    
+        of(x)	                  emit x
+        from(promise)	          promise → observable
+        throwError()	          emit error
+        interval()	            repeatedly emit 
+    Core concept of RxJS - Observables
+        - Observables are stream of data that can wmit multiple values over time similar to array but
+          asynchronous.
+        - with observables we can wait for values from an API, listen to user interactions, and handle 
+          handle operations like websockets or timers. 
 
 ========================================================================================
 
