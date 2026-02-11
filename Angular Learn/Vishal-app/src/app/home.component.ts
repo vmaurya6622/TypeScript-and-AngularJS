@@ -16,6 +16,7 @@ import { authGuard, getLoginStatus, setLoginStatus, setLogoutStatus } from './au
 import { HttpClient } from '@angular/common/http';
 import { HttpDemoComponent } from './Http.demo';
 import { RxjsComponent } from './rxjs';
+import { PipesDemoComponent } from './pipe.demo';
 
 
 // Component-Provided Service (Hierarchical DI)
@@ -72,7 +73,7 @@ type Item = { id: number, name: string }
 @Component({
     selector: 'app-home',
     standalone: true,
-    imports: [CommonModule, HelloComponent, FormsModule, ReactiveFormsModule, RouterLink, PanelA, PanelB, HttpDemoComponent, RxjsComponent],
+    imports: [CommonModule, HelloComponent, FormsModule, ReactiveFormsModule, RouterLink, PanelA, PanelB, HttpDemoComponent, RxjsComponent,PipesDemoComponent],
     templateUrl: './home.component.html',
     styleUrls: ['./app.css']
 })

@@ -411,6 +411,20 @@ RxJS -> it stands for reactive extensions for javaScript - its  a library which 
 
 ========================================================================================
 
+Angular Lifecycle Hooks:
+    Constructor
+        ↓
+    ngOnChanges (if inputs change)
+        ↓
+    ngOnInit
+        ↓
+    Template Render
+        ↓
+    ngAfterViewInit
+        ↓
+    Component running...
+        ↓
+    ngOnDestroy
 
 
 ========================================================================================
