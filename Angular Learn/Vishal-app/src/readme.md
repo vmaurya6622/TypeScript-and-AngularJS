@@ -426,6 +426,15 @@ Angular Lifecycle Hooks:
         ↓
     ngOnDestroy
 
+    -> ngOnInit(): is called once after all angular @Input properties are set and after the component 
+        is constructed. used to fetch initial data and component states.
+    -> ngOnChanges() runs after everytime @Input() property changes. also it runs before ngOnInit()
+        on the first change. respond when parent component update data. it is also used to compair 
+        previous and current values. it runs multiple times during the component lifetime.
+    -> ngAfterViewInit(): is called after angular has fully initialised the view including component,
+        child and DOM elements via @ViewChild.
+    -> ngOnDestroy(): is called once and does cleanup before component removal. unsubscribe from 
+        observables, clear setInterval or serTimeout, remove event Listeners and destroy services.
 
 ========================================================================================
 
