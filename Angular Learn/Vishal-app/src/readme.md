@@ -373,9 +373,41 @@ RxJS -> it stands for reactive extensions for javaScript - its  a library which 
         - with observables we can wait for values from an API, listen to user interactions, and handle 
           handle operations like websockets or timers. 
 
+    Observables are lazy therefore we have to subscribe to view the results of observables and unsubscribe to avoid any memory leaks.
+    cold observables starts fresh for every subscriber or HTTP call and hot observables are for 
+    shared execution (subjects, events)\
+
+    of(x) will emit variable x;
+    from(promise) where promise is an observable and it will be emitted.
+    throwError()  this will be emitting error.
+    interval()  this will repeatedly emit observable after a fixed interval.
+
+
+    observables -> are stream of values;
+    observe -> which listens to these values.
+    Subscription -> ye observable chalana start karwata hai.
+    Operator -> it is a data pipeline which has array like functions.
+    Subject -> it emits its own and it sends to multiple listeners.
+    Schedular -> ye control karta hai ki kab run hoga and async kaise handle hoga.
+
 ========================================================================================
 
+    -> debounceTime() it ignores rapid events and it wait for X ms of time and then if any input comes
+        within that duration then it resets the purana wala timer to naya 500 ms wala.
+    -> switchMap() one observable switches to another observable. it cancels pehle wala observable and 
+        and naya emit hota hai.
+    -> map() it is used to transform the data to another form.
+        Observable<Observable> - cancel nahi karta, nested observables banata hai.
+    -> pipe() it is used to chain multiple operators:
+        like observable.pipe(operator1,operator2,....).
 
+    ----------- Async Pipes -------------
+    async pipe template me observable ko subscribe karta hai aur latest UI me render karta hai.
+    aur jab component destroy hota hai toh vo automatically unsubscribe kar deta hai.
+    syntax {{observable$ | async}}
+
+    $ convention hai -> variable observable hai
+    | async -> subscribe + latest value render.
 
 ========================================================================================
 

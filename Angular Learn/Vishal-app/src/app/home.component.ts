@@ -15,6 +15,7 @@ import { RouterLink, RouterOutlet, ActivatedRoute, Router } from '@angular/route
 import { authGuard, getLoginStatus, setLoginStatus, setLogoutStatus } from './auth.guard';
 import { HttpClient } from '@angular/common/http';
 import { HttpDemoComponent } from './Http.demo';
+import { RxjsComponent } from './rxjs';
 
 
 // Component-Provided Service (Hierarchical DI)
@@ -71,7 +72,7 @@ type Item = { id: number, name: string }
 @Component({
     selector: 'app-home',
     standalone: true,
-    imports: [CommonModule, HelloComponent, FormsModule, ReactiveFormsModule, RouterLink, PanelA, PanelB, HttpDemoComponent],
+    imports: [CommonModule, HelloComponent, FormsModule, ReactiveFormsModule, RouterLink, PanelA, PanelB, HttpDemoComponent, RxjsComponent],
     templateUrl: './home.component.html',
     styleUrls: ['./app.css']
 })
